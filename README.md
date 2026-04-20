@@ -1,2 +1,2 @@
-# .dot.file.file
-Dot File
+chmod +x DOT.FILE.sh
+./DOT.FILE.sh
