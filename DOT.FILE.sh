@@ -1,4 +1,8 @@
 #!/bin/bash
+# Prompt for password once and keep sudo alive
+sudo -v
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
 # Install Xcode Command Line Tools
 xcode-select --install 2>/dev/null
 until xcode-select -p &>/dev/null; do sleep 5; done
