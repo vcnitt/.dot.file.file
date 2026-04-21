@@ -92,7 +92,5 @@ defaults write com.apple.dock persistent-apps -array-add \
 killall Dock
 killall SystemUIServer
 
-# Reboot in 10 seconds to apply all settings and finalize updates
-echo "Setup complete. Rebooting in 10 seconds..."
-sleep 10
-sudo shutdown -r now
+# Prompt user to restart with native macOS dialog
+osascript -e 'display dialog "Setup complete. Restart now to apply all changes?" buttons {"Later", "Restart"} default button "Restart" with icon note with title "Setup Complete"' -e 'if button returned of result is "Restart" then tell application "System Events" to restart'
