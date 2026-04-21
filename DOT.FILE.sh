@@ -51,6 +51,18 @@ EOF
 brew bundle --file="$BREWFILE"
 rm "$BREWFILE"
 
+# ----- SQL Server drivers for Tableau -----
+
+# Install Microsoft ODBC driver
+brew tap microsoft/mssql-release https://github.com/Microsoft/homebrew-mssql-release
+HOMEBREW_ACCEPT_EULA=Y brew install msodbcsql18
+
+# Install Microsoft JDBC driver for Tableau
+mkdir -p ~/Library/Tableau/Drivers
+curl -L "https://go.microsoft.com/fwlink/?linkid=2356504" -o /tmp/sqljdbc.tar.gz
+tar -xzf /tmp/sqljdbc.tar.gz -C /tmp
+cp /tmp/sqljdbc_*/enu/jars/mssql-jdbc-*jre11.jar ~/Library/Tableau/Drivers/
+
 # ----- macOS settings -----
 
 # Mouse: turn off natural scrolling
