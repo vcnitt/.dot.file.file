@@ -3,9 +3,11 @@
 sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
+# Install all available macOS updates (will apply on final reboot)
+sudo softwareupdate -i -a
+
 # Install Xcode Command Line Tools silently
 if ! xcode-select -p &>/dev/null; then
-  # Trick softwareupdate into seeing the CLT as installable
   touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
   CLT_LABEL=$(softwareupdate -l 2>/dev/null | grep -B 1 "Command Line Tools" | awk -F'*' '/^ *\*/ {print $2}' | sed 's/^ Label: //' | tr -d '\n' | head -1)
   if [ -n "$CLT_LABEL" ]; then
@@ -78,7 +80,7 @@ defaults write com.apple.dock persistent-apps -array-add \
 killall Dock
 killall SystemUIServer
 
-# Reboot in 10 seconds to apply all settings
+# Reboot in 10 seconds to apply all settings and finalize updates
 echo "Setup complete. Rebooting in 10 seconds..."
 sleep 10
 sudo shutdown -r now
